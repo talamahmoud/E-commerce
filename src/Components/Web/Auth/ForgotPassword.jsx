@@ -1,31 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Input from '../../Shared/Input'
 import { useFormik } from 'formik'
-import { registerScheme } from '../Validation/validation';
+import { forgotPasswordSchema } from '../Validation/validation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
-export default function Register() {
+export default function ForgotPassword() {
     const initialValues={
-        userName:'',
         email: '',
         password: '',
-        image:'',
+        code:'',
     };
-    const handleFieldChange = (event)=>{
-        formik.setFieldValue('image', event.target.files[0])
-    }
+    const navigate = useNavigate();
+   
+    
+   
+    
     const onSubmit=async users=>{
-        const formData = new FormData();
-        formData.append('userName', users.userName);
-        formData.append('email', users.email);
-        formData.append('password', users.password);
-        formData.append('image', users.image);
-        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signup',formData);
+        const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/auth/forgotPassword`,users);
         if(data.message == 'success'){
-            formik.resetForm();
-            toast.success('account created successfully, plz verify ur email to login', {
+
+            toast.success(`Password Changed Successfully`, {
                 position: "top-right",
                 autoClose: false,
                 hideProgressBar: false,
@@ -35,23 +32,20 @@ export default function Register() {
                 progress: undefined,
                 theme: "dark",
                 });
+            navigate('/login')
         }
-        console.log(data);
+        
+
+        
     }
+    
     
     const formik = useFormik({
         initialValues : initialValues,
         onSubmit,
-        validationSchema:registerScheme
+        validationSchema:forgotPasswordSchema
     })
     const inputs =[
-        {
-            type : 'text',
-            id:'userName',
-            name:'userName',
-            title:'User Name',
-            value:formik.values.userName,
-        },
         {
             type : 'email',
             id:'email',
@@ -66,14 +60,15 @@ export default function Register() {
             title:'User Password',
             value:formik.values.password,
         },
-        
         {
-            type:'file',
-            id:'image',
-            name:'image',
-            title:'User Image',
-            onChange:handleFieldChange,
-        }
+            type : 'text',
+            id:'code',
+            name:'code',
+            title:'Code',
+            value:formik.values.code,
+        },
+        
+       
     ]
     const renderInputs = inputs.map((input,index)=>
         <Input type={input.type} 
@@ -82,18 +77,18 @@ export default function Register() {
           title={input.title} 
           key={index} 
           errors={formik.errors} 
-          onChange={input.onChange||formik.handleChange}
+          onChange={formik.handleChange}
            onBlur={formik.handleBlur}
             touched={formik.touched}
             />
     )
   return (
     <div className='container'>
-        <h2 className='text-center my-4'>Create Account</h2>
-        <form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
+        <h2 className='text-center my-4'>Change Password</h2>
+        <form onSubmit={formik.handleSubmit}>
             {renderInputs}
             <div className="d-grid gap-2 col-6 mx-auto">
-                <button className="btn btn-success" type="submit">Create Account</button>
+                <button className="btn btn-success" type="submit">Change Password !</button>
             </div>
 
         </form>

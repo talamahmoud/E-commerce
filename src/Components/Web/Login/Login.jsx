@@ -1,31 +1,32 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Input from '../../Shared/Input'
 import { useFormik } from 'formik'
-import { registerScheme } from '../Validation/validation';
+import { loginScheme } from '../Validation/validation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../Context/FeatureUser';
 
 
-export default function Register() {
+export default function Login() {
     const initialValues={
-        userName:'',
         email: '',
         password: '',
-        image:'',
     };
-    const handleFieldChange = (event)=>{
-        formik.setFieldValue('image', event.target.files[0])
+    const navigate = useNavigate();
+    let {userToken,setUserToken,userData} = useContext(UserContext);
+    
+    if(userToken){
+        navigate(-1);
     }
+    
     const onSubmit=async users=>{
-        const formData = new FormData();
-        formData.append('userName', users.userName);
-        formData.append('email', users.email);
-        formData.append('password', users.password);
-        formData.append('image', users.image);
-        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signup',formData);
+        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signin',users);
         if(data.message == 'success'){
-            formik.resetForm();
-            toast.success('account created successfully, plz verify ur email to login', {
+            localStorage.setItem('userToken' , data.token);
+            setUserToken(data.token);
+            //saveCurrentUser();
+            toast.success(`Welcome`, {
                 position: "top-right",
                 autoClose: false,
                 hideProgressBar: false,
@@ -35,23 +36,20 @@ export default function Register() {
                 progress: undefined,
                 theme: "dark",
                 });
+            navigate('/')
         }
-        console.log(data);
+        
+        //console.log(data);
+        
     }
+    
     
     const formik = useFormik({
         initialValues : initialValues,
         onSubmit,
-        validationSchema:registerScheme
+        validationSchema:loginScheme
     })
     const inputs =[
-        {
-            type : 'text',
-            id:'userName',
-            name:'userName',
-            title:'User Name',
-            value:formik.values.userName,
-        },
         {
             type : 'email',
             id:'email',
@@ -67,13 +65,7 @@ export default function Register() {
             value:formik.values.password,
         },
         
-        {
-            type:'file',
-            id:'image',
-            name:'image',
-            title:'User Image',
-            onChange:handleFieldChange,
-        }
+       
     ]
     const renderInputs = inputs.map((input,index)=>
         <Input type={input.type} 
@@ -82,18 +74,19 @@ export default function Register() {
           title={input.title} 
           key={index} 
           errors={formik.errors} 
-          onChange={input.onChange||formik.handleChange}
+          onChange={formik.handleChange}
            onBlur={formik.handleBlur}
             touched={formik.touched}
             />
     )
   return (
     <div className='container'>
-        <h2 className='text-center my-4'>Create Account</h2>
-        <form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
+        <h2 className='text-center my-4'>Sign In</h2>
+        <form onSubmit={formik.handleSubmit}>
             {renderInputs}
+            <Link to = '/sendCode'>Forgot Password?</Link>
             <div className="d-grid gap-2 col-6 mx-auto">
-                <button className="btn btn-success" type="submit">Create Account</button>
+                <button className="btn btn-success" type="submit">Sign In</button>
             </div>
 
         </form>
