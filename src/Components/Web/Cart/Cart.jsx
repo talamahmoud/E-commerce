@@ -14,12 +14,12 @@ export default function Cart() {
     
     const removeFromCart = async (productId)=>{
         const res = await removeFromCartContext(productId);
-        console.log(res.cart);
+       
         return res.cart;
     }
      
     const {data,isLoading} = useQuery('cart-content' , getCart);
-    //console.log(data);
+
     if(isLoading){
         return <div class="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
         <span class="loader"></span>
@@ -46,7 +46,7 @@ export default function Cart() {
                   <h2>Subtotal</h2>
                 </div>
               </div>
-{/* {console.log(data.count)} */}
+
             {data?.count?(data.products.map((product)=>
                <div className="item" key={product._id}>
                 <div className="product-info">
@@ -112,7 +112,7 @@ export default function Cart() {
                 <div className="price">{product.details.price}</div>
                 <div className="subtotal">{product.details.price * product.quantity}</div>
               </div> 
-            )):<>{console.log('hhhh')} <h2>cart empty</h2></>}
+            )):<> <h2>cart empty</h2></>}
               
 
 

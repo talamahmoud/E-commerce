@@ -35,7 +35,7 @@ export default function SendCode() {
             navigate('/forgotPassword')
         }
         
-        //console.log(data);
+
         
     }
     

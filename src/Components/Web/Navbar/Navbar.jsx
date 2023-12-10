@@ -17,7 +17,7 @@ export default function Navbar() {
   }
 
   
-  console.log(userData);
+
   //console.log(userToken);
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">

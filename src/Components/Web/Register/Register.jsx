@@ -36,7 +36,7 @@ export default function Register() {
                 theme: "dark",
                 });
         }
-        console.log(data);
+        
     }
     
     const formik = useFormik({

@@ -7,7 +7,7 @@ export default function CategoriesDetails() {
     const {categoryId} = useParams();
     const getCategoryDetails = async ()=>{
         const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/products/category/${categoryId}`);
-        console.log(data.products);
+
         return data.products;
     }
     const {data,isLoading} = useQuery('category-details' , getCategoryDetails);

@@ -68,7 +68,7 @@ export function CartContextProvider({children}){
                 theme: "dark",
                 });
            }
-            console.log(data);
+        
             return data;
         }
         catch(error){

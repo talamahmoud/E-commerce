@@ -3,7 +3,7 @@ import { UserContext } from '../Context/FeatureUser'
 
 export default function UserInfo() {
     const {userData} = useContext(UserContext);
-    console.log(userData)
+    
   return (
     <>
         <div className="row">
