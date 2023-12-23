@@ -7,8 +7,8 @@ import { Link, Outlet } from 'react-router-dom';
 export default function Profile() {
     const {userData,loading} = useContext(UserContext);
     if(loading){
-        return  <div class="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
-                    <span class="loader"></span>
+        return  <div className="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
+                    <span className="loader"></span>
                 </div>
     }
 
@@ -30,6 +30,11 @@ export default function Profile() {
             <li>
                 <Link to = 'contact' className="nav-link px-0 align-middle">
                 <i className="fs-4 bi-table" /> <span className="ms-1 d-none d-sm-inline">Contact</span></Link>
+            </li>
+            
+            <li>
+                <Link to = 'orders' className="nav-link px-0 align-middle">
+                <i className="fs-4 bi-table" /> <span className="ms-1 d-none d-sm-inline">orders</span></Link>
             </li>
 
             </ul>

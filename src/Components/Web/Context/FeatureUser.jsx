@@ -17,11 +17,23 @@ export default function UserContextProvider ({children}){
         }
     }
     
-            useEffect(()=>{
-                getUserData();
-            },[userToken]);
+    useEffect(()=>{
+        getUserData();
+    },[userToken]);
+
+    const getUserOrdersContext =async()=>{
+        if(userToken){
+            const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/order`,
+            {headers:{Authorization:`Tariq__${userToken}`}}
+            )
             
-return <UserContext.Provider value={{userToken,setUserToken,userData,setUserData,loading}}>
+            setLoading(false);
+            
+            return data;
+        }
+    }
+            
+return <UserContext.Provider value={{userToken,setUserToken,userData,setUserData,loading,getUserOrdersContext}}>
     {children}
 </UserContext.Provider>
 }

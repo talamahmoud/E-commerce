@@ -18,6 +18,8 @@ import UserInfo from '../Components/Web/Profile/UserInfo';
 import UserContact from '../Components/Web/Profile/UserContact';
 import SendCode from '../Components/Web/Auth/SendCode';
 import ForgotPassword from '../Components/Web/Auth/ForgotPassword';
+import Order from '../Components/Web/Order/Order';
+import UserOrders from '../Components/Web/Profile/UserOrders';
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +55,10 @@ export const router = createBrowserRouter([
           element:<Categories />
         },
         {
+          path:'order',
+          element:<Order />
+        },
+        {
           path:'profile',
           element:
           <ProtectedRoute>
@@ -67,6 +73,10 @@ export const router = createBrowserRouter([
             {
               path:'contact',
               element:<UserContact/>
+            },
+            {
+              path:'orders',
+              element:<UserOrders/>
             }
           ]
         },

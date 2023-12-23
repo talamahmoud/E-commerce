@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './Cart.css'
 import { CartContext } from '../Context/FeatureCart'
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 export default function Cart() {
 
-    const {getCartContext,removeFromCartContext,cart} = useContext(CartContext);
-
+    const {getCartContext,removeFromCartContext,cart,clearCartContext,count,increaseQuantityContext,decreaseQuantityContext,calculateTotalPriceContext,createOrderContext} = useContext(CartContext);
+    
     const getCart =async ()=>{
         const res = await getCartContext();
         return res;
@@ -17,14 +17,32 @@ export default function Cart() {
        
         return res.cart;
     }
-     
+    const clearCart = async()=>{
+      const res=await  clearCartContext();
+      return res;
+    }
+     const increaseQuantity = async(productId)=>{
+      const res = await increaseQuantityContext(productId);
+      return res;
+     }
+
+     const createOrder = async(phone,address,couponName)=>{
+      const res = await createOrderContext(phone,address,couponName);
+     }
+     const decreaseQuantity = async(productId)=>{
+      const res = await decreaseQuantityContext(productId);
+      
+      return res;
+     }
     const {data,isLoading} = useQuery('cart-content' , getCart);
 
     if(isLoading){
-        return <div class="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
-        <span class="loader"></span>
+        return <div className="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
+        <span className="loader"></span>
     </div>
     }
+
+    
 
   return (
     <div className="cart">
@@ -74,7 +92,12 @@ export default function Cart() {
                   </div>
                 </div>
                 <div className="quantity">
-                  <button>
+                  <button onClick={()=>{
+                    if(product.quantity > 1){
+                      decreaseQuantity(product.details._id)
+                    }
+                  }} disabled = {product.quantity == 1}>
+                   
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={16}
@@ -92,7 +115,7 @@ export default function Cart() {
                     </svg>
                   </button>
                   <span>{product.quantity}</span>
-                  <button>
+                  <button onClick={()=>increaseQuantity(product.details._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={16}
@@ -113,6 +136,10 @@ export default function Cart() {
                 <div className="subtotal">{product.details.price * product.quantity}</div>
               </div> 
             )):<> <h2>cart empty</h2></>}
+           
+              <button className='btn btn-outline-danger text-center my-3 w-25' onClick={clearCart} disabled={count==0}>Clear Cart</button>
+            
+            
               
 
 
@@ -140,14 +167,14 @@ export default function Cart() {
                 </div>
                 <div className="summary-footer">
                   <label>Subtotal</label>
-                  <span>$1234.00</span>
+                  <span>$</span>
                 </div>
                 <div className="summary-footer">
                   <label className="total">Total</label>
                   <span>$1345.00</span>
                 </div>
                 <div className="checkout">
-                  <a href="#">Chekout</a>
+                  <Link to = '/order'>Chekout</Link>
                 </div>
               </div>
             </div>

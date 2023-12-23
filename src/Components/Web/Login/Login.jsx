@@ -38,12 +38,8 @@ export default function Login() {
                 });
             navigate('/')
         }
-        
-        //console.log(data);
-        
+        //console.log(data); 
     }
-    
-    
     const formik = useFormik({
         initialValues : initialValues,
         onSubmit,
@@ -64,8 +60,6 @@ export default function Login() {
             title:'User Password',
             value:formik.values.password,
         },
-        
-       
     ]
     const renderInputs = inputs.map((input,index)=>
         <Input type={input.type} 
