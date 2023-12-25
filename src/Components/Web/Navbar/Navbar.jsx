@@ -40,7 +40,7 @@ export default function Navbar() {
 
 
           <li className="nav-item">
-          <Link className="nav-link" to="/products/category/:categoryId">Products</Link>
+          <Link className="nav-link" to='/products'>Products</Link>
         </li>
 
         {userToken?

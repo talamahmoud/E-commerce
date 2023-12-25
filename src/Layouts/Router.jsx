@@ -20,6 +20,7 @@ import SendCode from '../Components/Web/Auth/SendCode';
 import ForgotPassword from '../Components/Web/Auth/ForgotPassword';
 import Order from '../Components/Web/Order/Order';
 import UserOrders from '../Components/Web/Profile/UserOrders';
+import AllProducts from '../Components/Web/AllProducts/AllProducts';
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
         {
           path:'categories',
           element:<Categories />
+        },
+        {
+          path : '/products',
+          element : <AllProducts/>
         },
         {
           path:'order',

@@ -7,7 +7,7 @@ export default function UserOrders() {
     const {getUserOrdersContext} = useContext(UserContext);
     const getUserOrders =async ()=>{
         const res = await getUserOrdersContext();
-        
+        console.log(res.orders)
         return res.orders;
 }
     const {data,isLoading} = useQuery('order-content' , getUserOrders);
