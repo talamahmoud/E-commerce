@@ -1,15 +1,10 @@
 import React from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../Context/FeatureUser'
-//import React, { useContext, useEffect, useState } from 'react'
 import Input from '../../Shared/Input'
 import { useFormik } from 'formik'
-import { orderSchema } from '../Validation/validation';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-//import { Link, useNavigate } from 'react-router-dom';
-
-import { CartContext } from '../Context/FeatureCart';
+import { toast } from 'react-toastify'
 import { useQuery } from 'react-query';
 
 
@@ -38,10 +33,8 @@ export default function ReviewOrders({productId}) {
                     draggable: true,
                     progress: undefined,
                     theme: "dark",
-                });
-                
+                });   
             }
-            
             return data;
         } catch (error) {
             console.error(error);

@@ -13,3 +13,9 @@ img.userReviewer{
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
+
+svg{
+    width: 20px;
+    height: 20px;
+}
+  

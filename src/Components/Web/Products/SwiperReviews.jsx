@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import '../Swiper/Swiper.css'
 export default function({data}) {
-    let ratingCount = 0;
+
     //console.log(data)
   return (
       <Swiper
@@ -32,7 +32,7 @@ export default function({data}) {
             <div className="testimonilas-author-thumb">
                     <img className='userReviewer' src={review.createdBy.image.secure_url} alt="girl" />
             </div>
-            
+
             <div className="testimonilas-author-title">
                     <h3>Name: {review.createdBy.userName}</h3>
                     <p>Role: {review.createdBy.role}</p>
@@ -46,6 +46,7 @@ export default function({data}) {
            
         </SwiperSlide>
       )):<h2>No Reviews</h2>}
+      
       </div>
     </Swiper>
   
