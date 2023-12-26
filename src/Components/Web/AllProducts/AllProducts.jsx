@@ -1,94 +1,145 @@
+//import * as React from 'react';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import Categories from '../Categories/Categories';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export default function AllProducts() {
-    const [currentPage, setCurrentPage] = useState(1);
-        const fetchProducts = async (page) => {
-            const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/products?page=${page}`);
-            console.log(data);
-          return data.products;
+        const [currentPage, setCurrentPage] = useState(1);
+        const [products, setProduct] = useState([]);
+        const [limit,setLimit] = useState(4);
+        const [sort,setSort] = useState('');
+        const [category,setCategory] = useState('');
+        const fetchProducts = async () => {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&limit=${limit}&&sort=${sort}`
+          );
+          //console.log(data);
+          setProduct(data);
         };
-      
-        const { data, isLoading } = useQuery(['products', currentPage], () => fetchProducts(currentPage));
-      
-        if (isLoading) {
-          return <div>Loading...</div>;
+        const changeLimit = (data)=>{
+          setLimit(Number(data));
         }
- 
-      
-        const {  totalPages } = data;
-      
-        const handlePageChange = (newPage) => {
-          setCurrentPage(newPage);
+        const changeSort = (data)=>{
+          setSort((data));
+        }
+        const handleCategoryChange = (selectedCategory) => {
+          setCategory(selectedCategory);
         };
-      
+        useEffect(() => {
+          fetchProducts();
+        }, [currentPage,limit,sort]);
+
+        let totalPages =Math.ceil(products.total / limit);
+        
+        console.log(products);
+        console.log(totalPages);
         return (
           <div>
-           
             <Categories/>
             {/* Display products */}
             <div className="container">
-        <h1 className='text-center p-4'>Products</h1>
-        <div className="row gap-3 justify-content-center  p-5">
-        {data.length?data.map((product)=>
-            
-                <div className="card col-lg-4" style={{width: '18rem'}} key={product._id}>
-                    <img src={product.mainImage.secure_url} className="card-img-top img-fluid" />
-                    <div className="card-body">
+              <h1 className="text-center p-4">Products {category}</h1>
+              <div className='d-flex gap-2'>
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Limit
+                  </button>
+                  <ul className="dropdown-menu">
+                    {Array.from({ length: products.total }, (_, index) => (
+                    <li  key={index}>
+                      <button className="dropdown-item" onClick={()=>changeLimit(`${index+1}`)}>
+                        {index+1}
+                      </button>
+                    </li>
+                    ))}
+                    
+                  </ul>
+                </div>
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Sort By
+                  </button>
+                  <ul className="dropdown-menu">
+                    
+                    <li>
+                      <button className="dropdown-item" onClick={()=>changeSort(`name`)}>
+                        name
+                      </button>
+                    </li>
+
+                    <li>
+                      <button className="dropdown-item" onClick={()=>changeSort(`price`)}>
+                        price
+                      </button>
+                    </li>
+
+                    <li>
+                      <button className="dropdown-item" onClick={()=>changeSort(`rating`)}>
+                        Highest rating
+                      </button>
+                    </li>
+
+                  
+                  </ul>
+                </div>
+
+              </div>
+              <div className="row gap-3 justify-content-center  p-5">
+                {products.products ? (
+                  products.products.map((product) => (
+                    <div
+                      className="card col-lg-4"
+                      style={{ width: "18rem" }}
+                      key={product._id}
+                    >
+                      <img
+                        src={product.mainImage.secure_url}
+                        className="card-img-top img-fluid"
+                      />
+                      <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>
                         {/*<p className="card-text">{product.description}</p> */}
-                        <Link to = {`/product/${product._id}`} className="btn btn-primary">Details</Link>
+                        <Link
+                          to={`/product/${product._id}`}
+                          className="btn btn-primary"
+                        >
+                          Details
+                        </Link>
+                      </div>
                     </div>
-                </div>
-            
-            
-        ):<h2>No Product</h2>}
-        </div>
-    </div>
-      
-            {/* Pagination */}
-            {/* <div>
-              <button
-                disabled={currentPage === 1}
-                onClick={() => handlePageChange(currentPage - 1)}
-              >
-                Previous
-              </button>
-              <span> Page {currentPage} of {totalPages} </span>
-              <button
-                disabled={currentPage === totalPages}
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                Next
-              </button>
-            </div> */}
-<div className="d-flex justify-content-center">
-<nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-            <a className="page-link" href="#" onClick={() => handlePageChange(currentPage - 1)}>
-              Previous
-            </a>
-          </li>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-              <a className="page-link" href="#" onClick={() => handlePageChange(index + 1)}>
-                {index + 1}
-              </a>
-            </li>
-            
-          ))}
-          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-            <a className="page-link" href="#" onClick={() => handlePageChange(currentPage + 1)}>
-              Next
-            </a>
-          </li>
-        </ul>
-      </nav>
-</div>
+                  ))
+                ) : (
+                  <h2>No Product</h2>
+                )}
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-center">
+              <Stack spacing={3}>
+                <Pagination
+                  count={totalPages}
+                  variant="outlined"
+                  shape="rounded"
+                  color="secondary"
+                  defaultPage={currentPage}
+                  onChange={(event, value) => setCurrentPage(value)}
+                />
+              </Stack>
+            </div>
           </div>
         );
       };

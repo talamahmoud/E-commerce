@@ -26,7 +26,7 @@ export default function({data}) {
       //onSlideChange={() => console.log('slide change')}
     >
       {data?.length ? data.map((category) => (
-        <SwiperSlide key={category._id}>
+        <SwiperSlide key={category._id} >
             <Link to={`/products/category/${category._id}`}>
                 <div className='category py-5'>
                     <img src={category.image.secure_url} className='img-fluid ' />

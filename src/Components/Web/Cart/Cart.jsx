@@ -135,7 +135,13 @@ export default function Cart() {
                 <div className="price">{product.details.price}</div>
                 <div className="subtotal">{product.details.price * product.quantity}</div>
               </div> 
-            )):<> <h2>cart empty</h2></>}
+            )):<> 
+            
+                  <h2>Cart Empty</h2>
+                  <p>browse the products to fill the cart</p>
+                  <Link to='/products' className='btn btn-outline-secondary w-25'>Products</Link>
+            
+              </>}
            
               <button className='btn btn-outline-danger text-center my-3 w-25' onClick={clearCart} disabled={count==0}>Clear Cart</button>
             
