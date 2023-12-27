@@ -22,7 +22,8 @@ export default function AllProducts() {
         const fetchProducts = async () => {
           try{
           const { data } = await axios.get(
-            `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&&limit=${limit}&&sort=${sort}&&price[gte]=${gtePrice}&&price[lte]=${ltePrice}`
+            `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&&limit=${limit}&&sort=${sort}
+            &&price[gte]=${gtePrice}&&price[lte]=${ltePrice}`
           );
           //console.log(data);
           setProduct(data);
@@ -45,7 +46,6 @@ export default function AllProducts() {
           setLtePrice(event.target.value);
         };
         const handleGoButtonClick = () => {
-          // Trigger the fetchProducts function when the "Go" button is clicked
           fetchProducts();
         };
         
@@ -63,7 +63,7 @@ export default function AllProducts() {
             {/* Display products */}
             <div className="container">
               <h1 className="text-center p-4">Products</h1>
-              <div className="d-flex gap-2">
+              <div className="d-flex gap-2 justify-content-center">
                 <div className="dropdown">
                   <button
                     className="btn btn-secondary dropdown-toggle"
@@ -125,44 +125,26 @@ export default function AllProducts() {
                   </ul>
                 </div>
                 <div className="dropdown ">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Filter by: 
+                  <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter by Price
                   </button>
                   <ul className="dropdown-menu p-4">
                     <form>
-                      <div>From: </div>
-                    <div className="form-row">
-                      <div className="col">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="First Number"
-                          onChange={handleGtePriceChange}
-                        />
-                      </div>
-                      to: 
-                      <div className="col">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="Last Number"
-                          onChange={handleLtePriceChange}
-                         
-                        />
-                      </div>
-                    </div>
-                    <button
-                      className="btn btn-outline-secondary"
-                      type="button"
-                      onClick={handleGoButtonClick}
-                    >
-                      Go
-                    </button>
+                      <div className='text-center'>From: </div>
+                        <div className="form-row">
+                          <div className="col">
+                            <input type="number" className="form-control" placeholder="First Number" onChange={handleGtePriceChange} />
+                          </div>
+                          <div className='text-center'>to: </div>
+                          <div className="col">
+                            <input type="number" className="form-control" placeholder="Last Number" onChange={handleLtePriceChange}/>
+                          </div>
+                        </div>
+                        <div className='p-2 text-center'>
+                        <button className="btn btn-outline-secondary" type="button"onClick={handleGoButtonClick}>
+                          Go
+                        </button>
+                        </div>
                   </form>
                   </ul>
                 </div>
