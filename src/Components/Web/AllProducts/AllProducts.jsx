@@ -60,6 +60,7 @@ export default function AllProducts() {
         return (
           <div>
             <Categories />
+            <hr/>
             {/* Display products */}
             <div className="container">
               <h1 className="text-center p-4">Products</h1>
@@ -170,7 +171,7 @@ export default function AllProducts() {
                         <p className="card-text">Price: {product.price}</p>
                         <Link
                           to={`/product/${product._id}`}
-                          className="btn btn-primary"
+                          className="btn btn-details"
                         >
                           Details
                         </Link>

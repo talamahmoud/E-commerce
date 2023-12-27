@@ -13,8 +13,8 @@ export default function({data}) {
       <Swiper
       // install Swiper modules
       modules={[Navigation, Pagination]}
-      spaceBetween={85}
-      slidesPerView={5.4}
+      spaceBetween={70}
+      slidesPerView={4}
       navigation
       loop = {true}
       autoplay = {{delay:3000}}

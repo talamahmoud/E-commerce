@@ -1,3 +1,48 @@
 body{
-    background-color: beige !important;
+    background-color: rgb(211, 155, 109) !important;
+    color: #5a3d11 !important;
 }
+.header{
+    background-image: url('h2.png');
+    height: 100vh;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.cat,h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #5a3d11;
+    font-weight: 800 !important;
+    font-size: 60px !important;
+}
+.footer{
+    background-color:  rgb(211, 155, 109) !important;
+}
+footer.footer.text-center.text-lg-start.bg-body-tertiary.text-muted{
+    background-color: rgb(211, 155, 109) !important;
+    color: #5a3d11 !important;
+}
+nav.navbar.navbar-expand-lg.bg-body-tertiary{
+    background-color:#fffdf6 !important;
+}
+nav a{
+    color: #5a3d11 !important;
+    font-weight: 600;
+}
+span.badge.badge-info{
+background-color: #5a3d11 !important;
+}
+button.btn.dropdown-toggle{
+    background-color: #5a3d11 !important;
+}
+.css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    color: rgb(211, 155, 109);
+   
+    background-color: #5a3d11;}
+
+    .btn-details{
+        background-color: #5a3d11 !important;
+        color:  rgb(211, 155, 109) !important;
+    }
