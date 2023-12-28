@@ -44,4 +44,7 @@ svg{
 .logo{
     width: 150px;
 }
-  
+select{
+    background-color: #5a3d11 !important;
+    color:whitesmoke !important;
+}  

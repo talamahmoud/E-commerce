@@ -8,23 +8,22 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 export default function AllProducts() {
-        let lessPrice = 0;
-        let greatPrice = 0;
+        
         const [currentPage, setCurrentPage] = useState(1);
         const [products, setProduct] = useState([]);
+        const [categories,setCategories] = useState([]);
         const [limit,setLimit] = useState(4);
         const [sort,setSort] = useState('');
         const [ltePrice,setLtePrice] = useState(100000);
         const [gtePrice,setGtePrice] = useState(0);
-        const [category,setCategory] = useState('');
+        const [categoryFilter,setCategorFilter] = useState(null);
         
 
         const fetchProducts = async () => {
           try{
           const { data } = await axios.get(
             `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&&limit=${limit}&&sort=${sort}
-            &&price[gte]=${gtePrice}&&price[lte]=${ltePrice}`
-          );
+            &&price[gte]=${gtePrice}&&price[lte]=${ltePrice}${categoryFilter?`&categoryId=${categoryFilter}`:''}`);
           //console.log(data);
           setProduct(data);
         }
@@ -32,6 +31,17 @@ export default function AllProducts() {
             console.log(error);
           }
         };
+
+
+        const getCategories = async ()=>{
+          const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/categories/active?limit=7`);
+          //console.log(data.categories);
+          setCategories(data.categories);
+
+         }
+        console.log(categories)
+    
+
         const changeLimit = (data)=>{
           setLimit(Number(data));
         }
@@ -48,15 +58,20 @@ export default function AllProducts() {
         const handleGoButtonClick = () => {
           fetchProducts();
         };
+        const handleCatFilter = (data) => {
+          console.log(data.target.value)
+          data.target.value =='all'? setCategorFilter(null):setCategorFilter(data.target.value)
+        };
         
         useEffect(() => {
           fetchProducts();
-        }, [currentPage,limit,sort]);
+          getCategories();
+        }, [currentPage,limit,sort,categoryFilter]);
 
         let totalPages =Math.ceil(products.total / limit);
+        totalPages = isNaN(totalPages) ? 1 : totalPages;
         
-        console.log(products);
-        console.log(totalPages);
+        
         return (
           <div>
             <Categories />
@@ -149,8 +164,18 @@ export default function AllProducts() {
                   </form>
                   </ul>
                 </div>
+                
+                <select className="form-select form-select-sm w-25" aria-label=".form-select-sm example" onChange={handleCatFilter}>
+                  
+                  <option value={'all'}>Filter By Category (ALL)</option>
+                  {
+                    categories?.map((category)=>
+                      <option key={category._id} value={category._id}>{category.name}</option>
+                    )
+                  }
+                </select>
               </div>
-                 
+             
               <div className="row gap-3 justify-content-center  p-5">
                 {products.products ? (
                   products.products.map((product) => (
@@ -160,8 +185,7 @@ export default function AllProducts() {
                       style={{ width: "18rem" }}
                       key={product._id}
                     >
-                      {/* {product.price < lessPrice ? lessPrice=product.price: null}
-                      {product.price > greatPrice ? greatPrice=product.price: null} */}
+                     
                       <img
                         src={product.mainImage.secure_url}
                         className="card-img-top img-fluid"
