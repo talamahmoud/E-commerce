@@ -123,13 +123,15 @@ const avgRat = ()=>{
           </div>
         </div>
       </div>
+      <hr/>
 
-      <h2 className="text-center py-4">
+      <h2 className="text-center py-4 fw-bolder">
         How satisfied are you with our product?
       </h2>
       <ReviewOrders productId={productId} />
+      <hr/>
 
-      <h2 className="text-center py-5">What Our Customers Say</h2>
+      <h2 className="text-center py-5 fw-bolder ">What Our Customers Say</h2>
       <SwiperReviews data={data} />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Cart.css'
 import { CartContext } from '../Context/FeatureCart'
 import { useQuery } from 'react-query';
@@ -6,23 +6,40 @@ import { Link } from 'react-router-dom';
 export default function Cart() {
 
     const {getCartContext,removeFromCartContext,cart,clearCartContext,count,increaseQuantityContext,decreaseQuantityContext,calculateTotalPriceContext,createOrderContext} = useContext(CartContext);
-    
+    const [loading,setLoading] = useState(false);
+    const[products,setProducts] = useState([]);
     const getCart =async ()=>{
         const res = await getCartContext();
+        console.log(res);
+        setProducts(res)
         return res;
     }
+    console.log(products)
     
     const removeFromCart = async (productId)=>{
+      setLoading(true);
         const res = await removeFromCartContext(productId);
-        return res.cart;
+        console.log(res);
+        if(res.message == 'success'){
+          setLoading(false);
+          return res;
+        }
+       
+        
     }
     const clearCart = async()=>{
       const res=await  clearCartContext();
       return res;
     }
      const increaseQuantity = async(productId)=>{
+      setLoading(true);
       const res = await increaseQuantityContext(productId);
-      return res;
+      console.log(res);
+      if(res.message == 'success'){
+        setLoading(false);
+        return res;
+      }
+
      }
 
      const createOrder = async(phone,address,couponName)=>{
@@ -33,9 +50,12 @@ export default function Cart() {
       
       return res;
      }
-    const {data,isLoading} = useQuery('cart-content' , getCart);
+    //const {data,isLoading} = useQuery('cart-content' , getCart);
+    useEffect(() => {
+      getCart();
+  }, [products]);
 
-    if(isLoading){
+    if(loading ){
         return <div className="loading bg-white position-fixed vh-100 w-100 d-flex justify-content-center align-items-center z-3">
         <span className="loader"></span>
     </div>
@@ -64,7 +84,7 @@ export default function Cart() {
                 </div>
               </div>
 
-            {data?.count?(data.products.map((product)=>
+            {products?.count?(products.products.map((product)=>
                <div className="item" key={product._id}>
                 <div className="product-info">
                   <img src={product.details.mainImage.secure_url} className=''/>

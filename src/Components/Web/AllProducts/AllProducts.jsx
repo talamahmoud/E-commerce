@@ -181,14 +181,14 @@ export default function AllProducts() {
                   products.products.map((product) => (
                   
                     <div
-                      className="card col-lg-4"
+                      className="card border-3 bg-transparent col-lg-4"
                       style={{ width: "18rem" }}
                       key={product._id}
                     >
                      
                       <img
                         src={product.mainImage.secure_url}
-                        className="card-img-top img-fluid"
+                        className="card-img-top img-fluid pt-4"
                       />
                       <div className="card-body">
                         <h5 className="card-title">{product.name}</h5>

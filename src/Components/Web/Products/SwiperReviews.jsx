@@ -27,8 +27,8 @@ export default function({data}) {
     >
         <div className="d-flex justify-content-center ">
       {data.reviews.length?data.reviews.map((review)=> (
-        <SwiperSlide key={review._id}>
-            <div className="text-center">
+        <SwiperSlide key={review._id} className='p-5'>
+            <div className="text-center card border-3 bg-transparent">
             <div className="testimonilas-author-thumb">
                     <img className='userReviewer' src={review.createdBy.image.secure_url} alt="girl" />
             </div>
