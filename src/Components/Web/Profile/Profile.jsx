@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import './Profile.css'
 import { UserContext } from '../Context/FeatureUser'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, Router } from 'react-router-dom';
 
 
 export default function Profile() {
@@ -57,7 +57,7 @@ export default function Profile() {
         </div>
         </div>
         <div className="col py-3">
-            <Outlet/>
+        {location.pathname == '/AdminIndex' && <Profile user={user} />}
         </div>
         </div>
     </>

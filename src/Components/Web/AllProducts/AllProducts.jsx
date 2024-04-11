@@ -22,7 +22,7 @@ export default function AllProducts() {
         const fetchProducts = async () => {
           try{
           const { data } = await axios.get(
-            `${import.meta.env.VITE_API_URL}/products?page=${currentPage}&&limit=${limit}&&sort=${sort}
+            `https://ecommerce-node4-five.vercel.app/products?page=${currentPage}&&limit=${limit}&&sort=${sort}
             &&price[gte]=${gtePrice}&&price[lte]=${ltePrice}${categoryFilter?`&categoryId=${categoryFilter}`:''}`);
           //console.log(data);
           setProduct(data);
@@ -34,7 +34,7 @@ export default function AllProducts() {
 
 
         const getCategories = async ()=>{
-          const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/categories/active?limit=7`);
+          const {data} = await axios.get(`https://ecommerce-node4-five.vercel.app/categories/active?limit=7`);
           //console.log(data.categories);
           setCategories(data.categories);
 

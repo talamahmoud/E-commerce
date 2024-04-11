@@ -7,22 +7,30 @@ import { toast } from 'react-toastify';
 
 
 export default function Register() {
+
+
     const initialValues={
         userName:'',
         email: '',
         password: '',
         image:'',
     };
+
+
     const handleFieldChange = (event)=>{
         formik.setFieldValue('image', event.target.files[0])
     }
+
+
+
     const onSubmit=async users=>{
         const formData = new FormData();
         formData.append('userName', users.userName);
         formData.append('email', users.email);
         formData.append('password', users.password);
         formData.append('image', users.image);
-        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signup',formData);
+        
+        const {data} = await axios.post('https://ecommerce-node4-five.vercel.app/auth/signup',formData);
         if(data.message == 'success'){
             formik.resetForm();
             toast.success('account created successfully, plz verify ur email to login', {
@@ -44,6 +52,8 @@ export default function Register() {
         onSubmit,
         validationSchema:registerScheme
     })
+
+
     const inputs =[
         {
             type : 'text',
@@ -75,6 +85,8 @@ export default function Register() {
             onChange:handleFieldChange,
         }
     ]
+
+
     const renderInputs = inputs.map((input,index)=>
         <Input type={input.type} 
         id={input.id}
@@ -87,6 +99,7 @@ export default function Register() {
             touched={formik.touched}
             />
     )
+    
   return (
     <div className='container'>
         <h2 className='text-center my-4'>Create Account</h2>

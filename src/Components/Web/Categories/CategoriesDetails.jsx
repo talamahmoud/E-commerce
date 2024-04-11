@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom'
 export default function CategoriesDetails() {
     const {categoryId} = useParams();
     const getCategoryDetails = async ()=>{
-        const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/products/category/${categoryId}`);
+        const {data} = await axios.get(`https://ecommerce-node4-five.vercel.app/products/category/${categoryId}`);
 
         return data.products;
     }

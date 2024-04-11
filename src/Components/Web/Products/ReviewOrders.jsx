@@ -18,7 +18,7 @@ export default function ReviewOrders({productId}) {
         const token = localStorage.getItem('userToken');
         try {
             const { data } = await axios.post(
-                `${import.meta.env.VITE_API_URL}/products/${productId}/review`,
+                `https://ecommerce-node4-five.vercel.app/products/${productId}/review`,
                 { comment: formik.values.comment, rating: formik.values.rating },
                 { headers: { Authorization: `Tariq__${token}` } }
             );

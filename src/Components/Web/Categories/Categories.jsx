@@ -9,7 +9,7 @@ export default function Categories() {
 
   
   const getCategories = async ()=>{
-     const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/categories/active?limit=7`);
+     const {data} = await axios.get(`https://ecommerce-node4-five.vercel.app/categories/active?limit=7`);
      return data.categories;
     }
   const handleCategoryChange = (categoryName) => {

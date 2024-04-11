@@ -16,7 +16,6 @@ export default function Navbar() {
     setUserData(null);
     navigate('/');
   }
-
   
 
   //console.log(userToken);

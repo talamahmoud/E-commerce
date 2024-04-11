@@ -20,7 +20,7 @@ export default function Products() {
   const { productId } = useParams();
   const getProduct = async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/products/${productId}`
+      `https://ecommerce-node4-five.vercel.app/products/${productId}`
     );
     //console.log(data.product);
     return data.product;

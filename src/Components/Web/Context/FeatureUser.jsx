@@ -8,7 +8,8 @@ export default function UserContextProvider ({children}){
     const[loading,setLoading] = useState(true);
     const getUserData = async ()=>{
         if(userToken){
-            const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/user/profile`,
+            //const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/user/profile`,
+            const {data} = await axios.get(`https://ecommerce-node4-five.vercel.app/user/profile`,
             {headers:{Authorization:`Tariq__${userToken}`}}
             )
             setUserData(data.user);
@@ -19,11 +20,11 @@ export default function UserContextProvider ({children}){
     
     useEffect(()=>{
         getUserData();
-    },[userToken]);
+    },[userToken,userData]);
 
     const getUserOrdersContext =async()=>{
         if(userToken){
-            const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/order`,
+            const {data} = await axios.get(`https://ecommerce-node4-five.vercel.app/order`,
             {headers:{Authorization:`Tariq__${userToken}`}}
             )
             

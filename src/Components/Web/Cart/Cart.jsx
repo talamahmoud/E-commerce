@@ -14,7 +14,6 @@ export default function Cart() {
     
     const removeFromCart = async (productId)=>{
         const res = await removeFromCartContext(productId);
-       
         return res.cart;
     }
     const clearCart = async()=>{
